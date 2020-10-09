@@ -1,0 +1,63 @@
+{
+  "name": "vscode-styled-jsx-syntax",
+  "displayName": "styled-jsx Syntax Highlighting",
+  "description": "Syntax highlighting for styled-jsx",
+  "version": "1.0.0",
+  "publisher": "Divlo",
+  "author": {
+    "name": "Divlo",
+    "email": "contact@divlo.fr",
+    "url": "https://github.com/Divlo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Divlo/vscode-styled-jsx"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.49.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "source.css.jsx.styled",
+        "aliases": [
+          "CSS (Styled JSX)"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "source.css.jsx.styled",
+        "scopeName": "source.css.jsx.styled",
+        "path": "./syntaxes/css.json"
+      },
+      {
+        "injectTo": [
+          "source.js",
+          "source.ts",
+          "source.jsx",
+          "source.js.jsx",
+          "source.tsx"
+        ],
+        "scopeName": "styled-jsx",
+        "path": "./syntaxes/jsx-styled.json",
+        "embeddedLanguages": {
+          "source.css.scss": "css",
+          "meta.embedded.line.ts": "typescript"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "vsce": "^1.81.1",
+    "yarn": "^1.22.10"
+  }
+}

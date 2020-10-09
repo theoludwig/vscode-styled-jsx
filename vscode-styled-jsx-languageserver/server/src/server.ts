@@ -1,0 +1,219 @@
+import {
+  createConnection,
+  TextDocuments,
+  ProposedFeatures,
+  TextDocumentSyncKind,
+  DocumentColorRequest,
+  ColorPresentationRequest,
+  Diagnostic,
+  TextDocumentPositionParams,
+  HandlerResult,
+  DocumentSymbolParams
+} from 'vscode-languageserver'
+import { getCSSLanguageService, Stylesheet } from 'vscode-css-languageservice'
+import { TextDocument } from 'vscode-languageserver-textdocument'
+
+import { getLanguageModelCache } from './language-model-cache'
+import { getStyledJsx, StyledJsx } from './styled-jsx-utils'
+
+const connection = createConnection(ProposedFeatures.all)
+const textDocuments = new TextDocuments(TextDocument)
+const cssLanguageService = getCSSLanguageService()
+const stylesheets = getLanguageModelCache<Stylesheet>(10, 60, textDocument =>
+  cssLanguageService.parseStylesheet(textDocument)
+)
+const validationDelayMs = 200
+const pendingValidationRequests: { [uri: string]: NodeJS.Timer } = {}
+
+function cleanPendingValidation (textDocument: TextDocument): void {
+  const request = pendingValidationRequests[textDocument.uri]
+  if (request != null) {
+    clearTimeout(request)
+    // eslint-disable-next-line
+    delete pendingValidationRequests[textDocument.uri]
+  }
+}
+
+function triggerValidation (textDocument: TextDocument): void {
+  cleanPendingValidation(textDocument)
+  pendingValidationRequests[textDocument.uri] = setTimeout(() => {
+    // eslint-disable-next-line
+    delete pendingValidationRequests[textDocument.uri]
+    validateTextDocument(textDocument)
+  }, validationDelayMs)
+}
+
+function clearDiagnostics (textDocument: TextDocument): void {
+  cleanPendingValidation(textDocument)
+  connection.sendDiagnostics({ uri: textDocument.uri, diagnostics: [] })
+}
+
+function validateTextDocument (textDocument: TextDocument): void {
+  const styledJsx = getStyledJsx(textDocument, stylesheets)
+  if (styledJsx != null) {
+    const { cssDocument, stylesheet } = styledJsx
+    const diagnostics: Diagnostic[] = cssLanguageService
+      .doValidation(cssDocument, stylesheet)
+      .map(d => {
+        return {
+          ...d,
+          code: d.code as string | number | undefined
+        }
+      })
+    connection.sendDiagnostics({ uri: textDocument.uri, diagnostics })
+  } else {
+    clearDiagnostics(textDocument)
+  }
+}
+
+function requestHandler (
+  params: TextDocumentPositionParams | DocumentSymbolParams,
+  callback: (styledJsx: StyledJsx) => HandlerResult<any, any>
+): HandlerResult<any, any> {
+  const document = textDocuments.get(params.textDocument.uri)
+  if (document == null) {
+    return null
+  }
+  const styledJsx = getStyledJsx(document, stylesheets)
+  if (styledJsx != null) {
+    return callback(styledJsx)
+  }
+}
+
+textDocuments.onDidClose(event => {
+  stylesheets.onDocumentRemoved(event.document)
+  clearDiagnostics(event.document)
+})
+
+textDocuments.onDidChangeContent(change => {
+  triggerValidation(change.document)
+})
+
+connection.onShutdown(() => {
+  stylesheets.dispose()
+})
+
+connection.onInitialize(initializeParams => {
+  const capabilities = initializeParams.capabilities
+  const hasWorkspaceFolderCapability =
+    capabilities?.workspace?.workspaceFolders != null &&
+    capabilities.workspace.workspaceFolders
+
+  return {
+    capabilities: {
+      textDocumentSync: TextDocumentSyncKind.Incremental,
+      workspace: {
+        workspaceFolders: {
+          supported: hasWorkspaceFolderCapability
+        }
+      },
+      completionProvider: {
+        resolveProvider: true
+      },
+      hoverProvider: true,
+      documentSymbolProvider: true,
+      referencesProvider: true,
+      definitionProvider: true,
+      documentHighlightProvider: true,
+      codeActionProvider: true,
+      renameProvider: false,
+      colorProvider: false
+    }
+  }
+})
+
+connection.onCompletionResolve(item => item)
+
+connection.onCompletion(params => {
+  return requestHandler(params, ({ cssDocument, stylesheet }) => {
+    return cssLanguageService.doComplete(
+      cssDocument,
+      params.position,
+      stylesheet
+    )
+  })
+})
+
+connection.onHover(params => {
+  return requestHandler(params, ({ cssDocument, stylesheet }) => {
+    return cssLanguageService.doHover(cssDocument, params.position, stylesheet)
+  })
+})
+
+connection.onDocumentSymbol(params => {
+  return requestHandler(params, ({ cssDocument, stylesheet }) => {
+    return cssLanguageService.findDocumentSymbols(cssDocument, stylesheet)
+  })
+})
+
+connection.onDefinition(params => {
+  return requestHandler(params, ({ cssDocument, stylesheet }) => {
+    return cssLanguageService.findDefinition(
+      cssDocument,
+      params.position,
+      stylesheet
+    )
+  })
+})
+
+connection.onDocumentHighlight(params => {
+  return requestHandler(params, ({ cssDocument, stylesheet }) => {
+    return cssLanguageService.findDocumentHighlights(
+      cssDocument,
+      params.position,
+      stylesheet
+    )
+  })
+})
+
+connection.onReferences(params => {
+  return requestHandler(params, ({ cssDocument, stylesheet }) => {
+    return cssLanguageService.findReferences(
+      cssDocument,
+      params.position,
+      stylesheet
+    )
+  })
+})
+
+connection.onCodeAction(params => {
+  return requestHandler(params, ({ cssDocument, stylesheet }) => {
+    return cssLanguageService.doCodeActions(
+      cssDocument,
+      params.range,
+      params.context,
+      stylesheet
+    )
+  })
+})
+
+connection.onRequest(DocumentColorRequest.type, params => {
+  return requestHandler(params, ({ cssDocument, stylesheet }) => {
+    return cssLanguageService.findDocumentColors(cssDocument, stylesheet)
+  })
+})
+
+connection.onRequest(ColorPresentationRequest.type, params => {
+  return requestHandler(params, ({ cssDocument, stylesheet }) => {
+    return cssLanguageService.getColorPresentations(
+      cssDocument,
+      stylesheet,
+      params.color,
+      params.range
+    )
+  })
+})
+
+connection.onRenameRequest(params => {
+  return requestHandler(params, ({ cssDocument, stylesheet }) => {
+    return cssLanguageService.doRename(
+      cssDocument,
+      params.position,
+      params.newName,
+      stylesheet
+    )
+  })
+})
+
+textDocuments.listen(connection)
+connection.listen()
