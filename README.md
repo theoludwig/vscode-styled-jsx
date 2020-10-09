@@ -26,8 +26,8 @@ Unfortunately, they are abandoned projects and the fact that it is seperated in 
 
 That's why I created this monorepo, to maintain two VS Code extensions :
 
-- [vscode-styled-jsx-languageserver](./vscode-styled-jsx-languageserver)
-- [vscode-styled-jsx-syntax](./vscode-styled-jsx-syntax)
+- [vscode-styled-jsx-languageserver](https://marketplace.visualstudio.com/items?itemName=Divlo.vscode-styled-jsx-languageserver)
+- [vscode-styled-jsx-syntax](https://marketplace.visualstudio.com/items?itemName=Divlo.vscode-styled-jsx-syntax)
 
 ## 💡 Contributing
 

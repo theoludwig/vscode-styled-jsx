@@ -11,7 +11,7 @@ Thanks a lot for your interest in contributing to **vscode-styled-jsx**! 🎉
 
 ## Pull Requests
 
-- **Please first discuss** the change you wish to make via [issue](https://github.com/Divlo/SocialProject/issues) before making a change. It might avoid a waste of your time.
+- **Please first discuss** the change you wish to make via [issue](https://github.com/Divlo/vscode-styled-jsx/issues) before making a change. It might avoid a waste of your time.
 
 - Ensure your code respect [Typescript Standard Style](https://www.npmjs.com/package/ts-standard).
 
