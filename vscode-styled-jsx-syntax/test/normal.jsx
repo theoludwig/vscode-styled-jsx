@@ -11,6 +11,11 @@ export const Button = props => (
         display: block;
       }
     `}</style>
+    <style jsx global>{`
+      .test {
+        font-size: large;
+      }
+    `}</style>
     <style global jsx>
       {`
         button {

@@ -2,7 +2,7 @@
   "name": "vscode-styled-jsx-syntax",
   "displayName": "styled-jsx Syntax Highlighting",
   "description": "Syntax highlighting for styled-jsx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "Divlo",
   "author": {
     "name": "Divlo",
