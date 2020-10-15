@@ -2,7 +2,7 @@
 	"name": "vscode-styled-jsx-languageserver",
 	"displayName": "styled-jsx Language Server",
 	"description": "Language server for styled-jsx",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": {
 		"name": "Divlo",
 		"email": "contact@divlo.fr",

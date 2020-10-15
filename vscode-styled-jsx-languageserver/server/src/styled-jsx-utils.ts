@@ -101,7 +101,7 @@ function findStyledJsxTaggedTemplate (
     textDocument.getText(),
     ts.ScriptTarget.Latest,
     true,
-    ts.ScriptKind.JSX | ts.ScriptKind.TSX
+    ts.ScriptKind.TSX
   )
 
   const templates: StyledJsxTaggedTemplate[] = []
@@ -124,7 +124,6 @@ function findStyledJsxTaggedTemplate (
 }
 
 const expressionPattern = /(.*\${.*}.*)|(.*(&&|[||]).*)/g
-// I guess so long functions are bad. Don't know how to properly format in typescript.
 export function replaceAllWithSpacesExceptCss (
   textDocument: TextDocument,
   styledJsxTaggedTemplates: StyledJsxTaggedTemplate[],
@@ -132,20 +131,20 @@ export function replaceAllWithSpacesExceptCss (
 ): { cssDocument: TextDocument, stylesheet: Stylesheet } {
   const text = textDocument.getText()
   let result = ''
-  // code that goes before CSS
+  // Code that goes before CSS
   result += text.slice(0, styledJsxTaggedTemplates[0].start).replace(/./g, ' ')
   for (let i = 0; i < styledJsxTaggedTemplates.length; i++) {
-    // CSS itself with dirty hacks. Maybe there is better solution.
-    // We need to find all expressions in css and replace each character of expression with space.
-    // This is neccessary to preserve character count
+    /* CSS itself with dirty hacks. Maybe there is better solution.
+    We need to find all expressions in CSS and replace each character of expression with space.
+    This is neccessary to preserve character count */
     result += text
       .slice(styledJsxTaggedTemplates[i].start, styledJsxTaggedTemplates[i].end)
       .replace(expressionPattern, (_str, p1) => {
         return p1.replace(/./g, ' ')
       })
-    // if there is several CSS parts
-    if (i + 1 < styledJsxTaggedTemplates.length) {
-      // code that is in between that CSS parts
+    const hasSeveralCSSParts = i + 1 < styledJsxTaggedTemplates.length
+    if (hasSeveralCSSParts) {
+      // Code that is in between that CSS parts
       result += text
         .slice(
           styledJsxTaggedTemplates[i].end,
@@ -154,7 +153,7 @@ export function replaceAllWithSpacesExceptCss (
         .replace(/./g, ' ')
     }
   }
-  // code that goes after CSS
+  // Code that goes after CSS
   result += text
     .slice(
       styledJsxTaggedTemplates[styledJsxTaggedTemplates.length - 1].end,
@@ -178,20 +177,16 @@ export function getStyledJsx (
   document: TextDocument,
   stylesheets: LanguageModelCache<Stylesheet>
 ): StyledJsx | undefined {
-  try {
-    const styledJsxOffsets = getApproximateStyledJsxOffsets(document)
-    if (styledJsxOffsets.length > 0) {
-      const styledJsxTaggedTemplates = findStyledJsxTaggedTemplate(document)
-      if (styledJsxTaggedTemplates.length > 0) {
-        return replaceAllWithSpacesExceptCss(
-          document,
-          styledJsxTaggedTemplates,
-          stylesheets
-        )
-      }
+  const styledJsxOffsets = getApproximateStyledJsxOffsets(document)
+  if (styledJsxOffsets.length > 0) {
+    const styledJsxTaggedTemplates = findStyledJsxTaggedTemplate(document)
+    if (styledJsxTaggedTemplates.length > 0) {
+      return replaceAllWithSpacesExceptCss(
+        document,
+        styledJsxTaggedTemplates,
+        stylesheets
+      )
     }
-    return undefined
-  } catch {
-    return undefined
   }
+  return undefined
 }

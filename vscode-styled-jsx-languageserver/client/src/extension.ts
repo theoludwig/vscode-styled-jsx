@@ -1,12 +1,5 @@
-/* ---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *-------------------------------------------------------------------------------------------- */
-'use strict'
-
 import * as path from 'path'
 
-// vscode.d.ts from https://github.com/Microsoft/vscode/blob/master/src/vs/vscode.d.ts
 import {
   languages,
   window,
@@ -38,19 +31,14 @@ import {
 } from 'vscode-languageserver-protocol'
 
 import * as nls from 'vscode-nls'
+
 const localize = nls.loadMessageBundle()
 
-// this method is called when vs code is activated
 export function activate (context: ExtensionContext): void {
-  // The server is implemented in node
   const serverModule = context.asAbsolutePath(
     path.join('server', 'out', 'server.js')
   )
-  // The debug options for the server
   const debugOptions = { execArgv: ['--nolazy', '--inspect=6004'] }
-
-  // If the extension is launch in debug mode the debug server options are use
-  // Otherwise the run options are used
   const serverOptions: ServerOptions = {
     run: { module: serverModule, transport: TransportKind.ipc },
     debug: {
@@ -59,15 +47,12 @@ export function activate (context: ExtensionContext): void {
       options: debugOptions
     }
   }
-
   const documentSelector = [
     'javascriptreact',
     'javascript',
     'typescriptreact',
     'typescript'
   ]
-
-  // Options to control the language client
   const clientOptions: LanguageClientOptions = {
     documentSelector,
     synchronize: {
@@ -75,8 +60,6 @@ export function activate (context: ExtensionContext): void {
     },
     initializationOptions: {}
   }
-
-  // Create the language client and start the client.
   const client = new LanguageClient(
     'styled.jsx',
     'styled-jsx Language Server',
@@ -86,8 +69,6 @@ export function activate (context: ExtensionContext): void {
   client.registerFeature(new ConfigurationFeature(client))
 
   const disposable = client.start()
-  // Push the disposable to the context's subscriptions so that the
-  // client can be deactivated on extension deactivation
   context.subscriptions.push(disposable)
 
   client
@@ -96,7 +77,6 @@ export function activate (context: ExtensionContext): void {
       client.code2ProtocolConverter.asPosition(
         window?.activeTextEditor?.selection?.active
       )
-      // register color provider
       context.subscriptions.push(
         languages.registerColorProvider(documentSelector, {
           provideDocumentColors (document): Thenable<ColorInformation[]> {
@@ -196,39 +176,31 @@ export function activate (context: ExtensionContext): void {
   })
 
   commands.registerCommand('styled.jsx.applyCodeAction', applyCodeAction)
-  // FIXME: don't know how to correctly test this
-  function applyCodeAction (
+  async function applyCodeAction (
     uri: string,
     documentVersion: number,
     edits: TextEdit[]
-  ): void {
+  ): Promise<void> {
     const textEditor = window.activeTextEditor
     if (textEditor != null && textEditor.document.uri.toString() === uri) {
       if (textEditor.document.version !== documentVersion) {
-        // eslint-disable-next-line
-        window.showInformationMessage(
+        await window.showInformationMessage(
           "CSS fix is outdated and can't be applied to the document."
         )
       }
-      // eslint-disable-next-line
-      textEditor
-        .edit(mutator => {
-          for (const edit of edits) {
-            mutator.replace(
-              client.protocol2CodeConverter.asRange(edit.range),
-              edit.newText
-            )
-          }
-        })
-        // eslint-disable-next-line
-        .then(success => {
-          if (!success) {
-            // eslint-disable-next-line
-            window.showErrorMessage(
-              'Failed to apply CSS fix to the document. Please consider opening an issue with steps to reproduce.'
-            )
-          }
-        })
+      const success = await textEditor.edit(mutator => {
+        for (const edit of edits) {
+          mutator.replace(
+            client.protocol2CodeConverter.asRange(edit.range),
+            edit.newText
+          )
+        }
+      })
+      if (!success) {
+        await window.showErrorMessage(
+          'Failed to apply CSS fix to the document. Please consider opening an issue with steps to reproduce.'
+        )
+      }
     }
   }
 }
