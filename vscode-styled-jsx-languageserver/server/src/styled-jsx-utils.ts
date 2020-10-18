@@ -177,16 +177,20 @@ export function getStyledJsx (
   document: TextDocument,
   stylesheets: LanguageModelCache<Stylesheet>
 ): StyledJsx | undefined {
-  const styledJsxOffsets = getApproximateStyledJsxOffsets(document)
-  if (styledJsxOffsets.length > 0) {
-    const styledJsxTaggedTemplates = findStyledJsxTaggedTemplate(document)
-    if (styledJsxTaggedTemplates.length > 0) {
-      return replaceAllWithSpacesExceptCss(
-        document,
-        styledJsxTaggedTemplates,
-        stylesheets
-      )
+  try {
+    const styledJsxOffsets = getApproximateStyledJsxOffsets(document)
+    if (styledJsxOffsets.length > 0) {
+      const styledJsxTaggedTemplates = findStyledJsxTaggedTemplate(document)
+      if (styledJsxTaggedTemplates.length > 0) {
+        return replaceAllWithSpacesExceptCss(
+          document,
+          styledJsxTaggedTemplates,
+          stylesheets
+        )
+      }
     }
+    return undefined
+  } catch {
+    return undefined
   }
-  return undefined
 }
