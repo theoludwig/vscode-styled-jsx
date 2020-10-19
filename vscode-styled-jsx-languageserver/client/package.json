@@ -4,7 +4,7 @@
 	"author": "Divlo",
 	"license": "MIT",
 	"version": "0.0.1",
-	"publisher": "divlo",
+	"publisher": "Divlo",
 	"engines": {
 		"vscode": "^1.49.0"
 	},
@@ -17,8 +17,7 @@
 			"./src/**/*.ts"
 		],
 		"envs": [
-			"node",
-			"mocha"
+			"node"
 		]
 	},
 	"scripts": {

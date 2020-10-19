@@ -10,7 +10,11 @@ import {
   HandlerResult,
   DocumentSymbolParams
 } from 'vscode-languageserver'
-import { getCSSLanguageService, Stylesheet } from 'vscode-css-languageservice'
+import {
+  getCSSLanguageService,
+  LanguageSettings,
+  Stylesheet
+} from 'vscode-css-languageservice'
 import { TextDocument } from 'vscode-languageserver-textdocument'
 
 import { getLanguageModelCache } from './language-model-cache'
@@ -24,6 +28,14 @@ const stylesheets = getLanguageModelCache<Stylesheet>(10, 60, textDocument =>
 )
 const validationDelayMs = 200
 const pendingValidationRequests: { [uri: string]: NodeJS.Timer } = {}
+const defaultSettings: LanguageSettings = {
+  lint: { emptyRules: 'ignore' }
+}
+const documentSettings: Map<string, Thenable<LanguageSettings>> = new Map()
+
+async function getDocumentSettings (): Promise<Thenable<LanguageSettings>> {
+  return await Promise.resolve(defaultSettings)
+}
 
 function cleanPendingValidation (textDocument: TextDocument): void {
   const request = pendingValidationRequests[textDocument.uri]
@@ -39,6 +51,7 @@ function triggerValidation (textDocument: TextDocument): void {
   pendingValidationRequests[textDocument.uri] = setTimeout(() => {
     // eslint-disable-next-line
     delete pendingValidationRequests[textDocument.uri]
+    // eslint-disable-next-line
     validateTextDocument(textDocument)
   }, validationDelayMs)
 }
@@ -48,12 +61,15 @@ function clearDiagnostics (textDocument: TextDocument): void {
   connection.sendDiagnostics({ uri: textDocument.uri, diagnostics: [] })
 }
 
-function validateTextDocument (textDocument: TextDocument): void {
+async function validateTextDocument (
+  textDocument: TextDocument
+): Promise<void> {
+  const settings = await getDocumentSettings()
   const styledJsx = getStyledJsx(textDocument, stylesheets)
   if (styledJsx != null) {
     const { cssDocument, stylesheet } = styledJsx
     const diagnostics: Diagnostic[] = cssLanguageService
-      .doValidation(cssDocument, stylesheet)
+      .doValidation(cssDocument, stylesheet, settings)
       .map(d => {
         return {
           ...d,
@@ -81,6 +97,7 @@ function requestHandler (
 }
 
 textDocuments.onDidClose(event => {
+  documentSettings.delete(event.document.uri)
   stylesheets.onDocumentRemoved(event.document)
   clearDiagnostics(event.document)
 })
@@ -119,6 +136,15 @@ connection.onInitialize(initializeParams => {
       renameProvider: false,
       colorProvider: false
     }
+  }
+})
+
+// eslint-disable-next-line
+connection.onDidChangeConfiguration(async _change => {
+  cssLanguageService.configure(defaultSettings)
+  const textDocumentsAll = textDocuments.all()
+  for (const textDocument of textDocumentsAll) {
+    await validateTextDocument(textDocument)
   }
 })
 

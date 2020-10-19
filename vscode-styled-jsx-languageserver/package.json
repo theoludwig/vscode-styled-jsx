@@ -1,46 +1,44 @@
 {
-	"name": "vscode-styled-jsx-languageserver",
-	"displayName": "styled-jsx Language Server",
-	"description": "Language server for styled-jsx",
-	"version": "1.0.2",
-	"author": {
-		"name": "Divlo",
-		"email": "contact@divlo.fr",
-		"url": "https://github.com/Divlo"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Divlo/vscode-styled-jsx"
-	},
-	"license": "MIT",
-	"publisher": "Divlo",
-	"engines": {
-		"vscode": "^1.49.0"
-	},
-	"categories": [
-		"Linters"
-	],
-	"activationEvents": [
-		"onLanguage:javascriptreact",
-		"onLanguage:javascript",
-		"onLanguage:typescriptreact",
-		"onLanguage:typescript",
-		"onCommand:styledJsx.applyCodeAction"
-	],
-	"main": "./client/out/extension",
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -b",
-		"watch": "tsc -b -w",
-		"postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
-		"package": "vsce package"
-	},
-	"devDependencies": {
-		"@types/mocha": "^8.0.3",
-		"@types/node": "^14.11.8",
-		"mocha": "^8.1.3",
-		"typescript": "^4.0.3",
-		"vsce": "^1.81.1",
-		"yarn": "^1.22.10"
-	}
+  "name": "vscode-styled-jsx-languageserver",
+  "displayName": "styled-jsx Language Server",
+  "description": "Language server for styled-jsx",
+  "version": "1.0.3",
+  "author": {
+    "name": "Divlo",
+    "email": "contact@divlo.fr",
+    "url": "https://github.com/Divlo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Divlo/vscode-styled-jsx"
+  },
+  "license": "MIT",
+  "publisher": "Divlo",
+  "engines": {
+    "vscode": "^1.49.0"
+  },
+  "categories": [
+    "Linters"
+  ],
+  "activationEvents": [
+    "onLanguage:javascriptreact",
+    "onLanguage:javascript",
+    "onLanguage:typescriptreact",
+    "onLanguage:typescript",
+    "onCommand:styledJsx.applyCodeAction"
+  ],
+  "main": "./client/out/extension",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^14.11.10",
+    "typescript": "^4.0.3",
+    "vsce": "^1.81.1",
+    "yarn": "^1.22.10"
+  }
 }
