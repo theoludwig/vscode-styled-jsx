@@ -3,6 +3,16 @@ import css from 'styled-jsx/css'
 export const Button = props => (
   <button>
     {props.children}
+    {/* Support SCSS syntax */}
+    <style jsx>{`
+      button {
+        color: #333;
+
+        &:hover {
+          color: #000;
+        }
+      }
+    `}</style>
     <style jsx>
       {`
         button {
