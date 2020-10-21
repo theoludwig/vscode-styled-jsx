@@ -11,7 +11,7 @@ import {
   DocumentSymbolParams
 } from 'vscode-languageserver'
 import {
-  getCSSLanguageService,
+  getSCSSLanguageService,
   LanguageSettings,
   Stylesheet
 } from 'vscode-css-languageservice'
@@ -22,7 +22,7 @@ import { getStyledJsx, StyledJsx } from './styled-jsx-utils'
 
 const connection = createConnection(ProposedFeatures.all)
 const textDocuments = new TextDocuments(TextDocument)
-const cssLanguageService = getCSSLanguageService()
+const cssLanguageService = getSCSSLanguageService()
 const stylesheets = getLanguageModelCache<Stylesheet>(10, 60, textDocument =>
   cssLanguageService.parseStylesheet(textDocument)
 )
