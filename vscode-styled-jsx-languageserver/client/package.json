@@ -32,6 +32,6 @@
 		"@types/vscode": "1.50.0",
 		"snazzy": "^8.0.0",
 		"ts-standard": "^9.0.0",
-		"vscode-test": "^1.4.0"
+		"vscode-test": "^1.4.1"
 	}
 }
