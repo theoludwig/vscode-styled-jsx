@@ -29,9 +29,8 @@
 		"vscode-nls": "^5.0.0"
 	},
 	"devDependencies": {
-		"@types/vscode": "1.50.0",
-		"snazzy": "^9.0.0",
-		"ts-standard": "^9.0.0",
-		"vscode-test": "^1.4.1"
+		"@types/vscode": "1.51.0",
+		"snazzy": "file:../node_modules/snazzy",
+		"ts-standard": "file:../node_modules/ts-standard"
 	}
 }
