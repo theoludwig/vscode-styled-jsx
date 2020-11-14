@@ -9,7 +9,7 @@ on:
     branches: [master]
 
 jobs:
-  ci_languageserver_package:
+  ci_languageserver:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -29,52 +29,6 @@ jobs:
         uses: actions/setup-node@v2.1.2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run compile
-      - run: npm run package
-
-  ci_languageserver_lint_client:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: vscode-styled-jsx-languageserver/server
-    strategy:
-      matrix:
-        node-version: [12.x]
-    steps:
-      - uses: actions/checkout@v2
-      - name: 'Cache dependencies'
-        uses: actions/cache@v2
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.1.2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run lint
-
-  ci_languageserver_lint_server:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: vscode-styled-jsx-languageserver/server
-    strategy:
-      matrix:
-        node-version: [12.x]
-    steps:
-      - uses: actions/checkout@v2
-      - name: 'Cache dependencies'
-        uses: actions/cache@v2
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.1.2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run lint
+      - run: 'npm ci'
+      - run: 'npm run package'
+      - run: 'npm run lint'
