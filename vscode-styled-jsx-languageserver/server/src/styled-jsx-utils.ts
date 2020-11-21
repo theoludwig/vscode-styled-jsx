@@ -56,7 +56,7 @@ function walk (node: ts.Node, callback: (node: ts.Node) => void): void {
 
 function getTemplateString (
   node: ts.Node
-): ts.TemplateExpression | ts.NoSubstitutionTemplateLiteral | undefined {
+): ts.TemplateExpression | ts.TemplateLiteralTypeNode | ts.NoSubstitutionTemplateLiteral | undefined {
   if (ts.isTemplateHead(node) || ts.isTemplateLiteral(node)) {
     if (ts.isTemplateHead(node)) {
       return node.parent
