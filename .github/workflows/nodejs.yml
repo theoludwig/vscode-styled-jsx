@@ -10,25 +10,29 @@ on:
 
 jobs:
   ci_languageserver:
-    runs-on: ubuntu-latest
+    if: ${{ (github.event_name == 'push') || (github.event_name == 'pull_request_review' && github.event.review.state == 'approved' && (github.event.review.author_association == 'COLLABORATOR' || github.event.review.author_association == 'MEMBER' || github.event.review.author_association == 'OWNER') && !github.event.pull_request.draft && github.event.pull_request.state == 'open') }}
+    runs-on: 'ubuntu-latest'
     defaults:
       run:
-        working-directory: vscode-styled-jsx-languageserver
+        working-directory: 'vscode-styled-jsx-languageserver'
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
     steps:
-      - uses: actions/checkout@v2
+      - uses: 'actions/checkout@v2'
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: 'actions/setup-node@v2.1.2'
+        with:
+          node-version: ${{ matrix.node-version }}
+
       - name: 'Cache dependencies'
-        uses: actions/cache@v2
+        uses: 'actions/cache@v2'
         with:
           path: |
             **/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.1.2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: 'npm ci'
+
+      - run: 'npm install'
       - run: 'npm run package'
       - run: 'npm run lint'
