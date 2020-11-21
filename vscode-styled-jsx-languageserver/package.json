@@ -2,7 +2,7 @@
   "name": "vscode-styled-jsx-languageserver",
   "displayName": "styled-jsx Language Server",
   "description": "Language server for styled-jsx",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "author": {
     "name": "Divlo",
     "email": "contact@divlo.fr",
@@ -37,11 +37,13 @@
     "lint": "cd client && npm run lint && cd ../server && npm run lint && cd ..",
     "format": "cd client && npm run format && cd ../server && npm run format && cd .."
   },
+  "dependencies": {
+    "typescript": "^4.1.2"
+  },
   "devDependencies": {
     "@types/node": "^14.14.9",
     "snazzy": "^9.0.0",
     "ts-standard": "^9.0.0",
-    "typescript": "^4.1.2",
     "vsce": "^1.81.1"
   }
 }

@@ -2,13 +2,11 @@
 
 [Main GitHub Repo](https://github.com/Divlo/vscode-styled-jsx/).
 
-Language server for [styled-jsx](https://github.com/zeit/styled-jsx).
-
-## Prerequisites
-
-The extension requires that [vscode-styled-jsx-syntax](https://github.com/Divlo/vscode-styled-jsx/vscode-styled-jsx-syntax) is installed. The extension will not work without it, because it converts template literals to language which can be detected by language server.
+Language server for [styled-jsx](https://github.com/vercel/styled-jsx).
 
 ## How it works
+
+It converts template literals to language which can be detected by language server.
 
 Consider this component:
 
@@ -64,8 +62,6 @@ to correctly propose completions, underline problems and highlight symbols.
 
 ## Features
 
-It should provide all the features that simply opening a `.css` file would:
-
 - `CSS` code completion
 
   ![css-completion](https://raw.githubusercontent.com/Divlo/vscode-styled-jsx/master/.github/images/completion.gif)
@@ -77,10 +73,6 @@ It should provide all the features that simply opening a `.css` file would:
 - Color picker
 
   ![color-picker](https://raw.githubusercontent.com/Divlo/vscode-styled-jsx/master/.github/images/color-picker.gif)
-
-- Linting
-
-  ![lint](https://raw.githubusercontent.com/Divlo/vscode-styled-jsx/master/.github/images/linting.gif)
 
 - Quick fixes
 

@@ -29,7 +29,7 @@ const stylesheets = getLanguageModelCache<Stylesheet>(10, 60, textDocument =>
 const validationDelayMs = 200
 const pendingValidationRequests: { [uri: string]: NodeJS.Timer } = {}
 const defaultSettings: LanguageSettings = {
-  lint: { emptyRules: 'ignore' }
+  validate: false
 }
 const documentSettings: Map<string, Thenable<LanguageSettings>> = new Map()
 

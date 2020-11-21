@@ -4,7 +4,7 @@ about: 'Improve structure/format/performance/refactor/tests of the code.'
 labels: 'improvement'
 ---
 
-<!--.
+<!--
 Please make sure your issue has not already been fixed.
 
 Please place an x (no spaces - [x]) in all [ ] that apply.
