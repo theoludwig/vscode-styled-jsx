@@ -5,7 +5,8 @@ import css from 'styled-jsx/css'
 // Scoped styles
 export const button = css`
   button {
-    color: hotpink;
+    color: rgb(91, 91, 148);
+    display: ;
   }
 `
 
