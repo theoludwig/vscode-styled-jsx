@@ -46,3 +46,33 @@ export async function setTestContent (content: string): Promise<boolean> {
   )
   return await editor.edit(eb => eb.replace(all, content))
 }
+
+export function includes (
+  actualArray: vscode.CompletionItem[],
+  expectedArray: vscode.CompletionItem[]
+): boolean {
+  const result: boolean[] = []
+  expectedArray.forEach(item => {
+    const hasItem = actualArray.some(item2 => {
+      return item2.kind === item.kind && item2.label === item.label
+    })
+    if (hasItem) {
+      result.push(true)
+    }
+  })
+  return expectedArray.length === result.length
+}
+
+export async function testCompletion (
+  docUri: vscode.Uri,
+  position: vscode.Position,
+  expectedCompletionList: vscode.CompletionList
+): Promise<boolean> {
+  await activate(docUri)
+  const actualCompletionList: vscode.CompletionList = await vscode.commands.executeCommand(
+    'vscode.executeCompletionItemProvider',
+    docUri,
+    position
+  )
+  return includes(actualCompletionList.items, expectedCompletionList.items)
+}
