@@ -16,15 +16,10 @@ export async function activate (docUri: vscode.Uri): Promise<void> {
   await ext.activate()
   try {
     doc = await vscode.workspace.openTextDocument(docUri)
-    console.log(
-      doc.getText(
-        new vscode.Range(new vscode.Position(7, 10), new vscode.Position(7, 11))
-      )
-    )
     editor = await vscode.window.showTextDocument(doc)
     await sleep(2000)
-  } catch (e) {
-    console.error(e)
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -75,4 +70,32 @@ export async function testCompletion (
     position
   )
   return includes(actualCompletionList.items, expectedCompletionList.items)
+}
+
+export async function testHover (
+  docUri: vscode.Uri,
+  position: vscode.Position,
+  expectedStartsWithValueHover: string
+): Promise<boolean> {
+  await activate(docUri)
+  const result: vscode.Hover[] = await vscode.commands.executeCommand(
+    'vscode.executeHoverProvider',
+    docUri,
+    position
+  )
+  if (result.length < 1) {
+    return false
+  }
+  const { contents } = result[0]
+  if (contents.length < 1) {
+    return false
+  }
+  const [markedString] = contents
+  if (
+    typeof markedString !== 'string' &&
+    markedString.value.startsWith(expectedStartsWithValueHover)
+  ) {
+    return true
+  }
+  return false
 }
