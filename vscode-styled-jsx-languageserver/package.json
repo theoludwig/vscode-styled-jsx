@@ -35,13 +35,16 @@
     "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
     "package": "vsce package",
     "lint": "cd client && npm run lint && cd ../server && npm run lint && cd ..",
-    "format": "cd client && npm run format && cd ../server && npm run format && cd .."
+    "format": "cd client && npm run format && cd ../server && npm run format && cd ..",
+    "test": "npm run compile && sh ./scripts/e2e.sh"
   },
   "dependencies": {
     "typescript": "^4.1.2"
   },
   "devDependencies": {
-    "@types/node": "^14.14.9",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^14.14.10",
+    "mocha": "^8.2.1",
     "snazzy": "^9.0.0",
     "ts-standard": "^9.0.0",
     "vsce": "^1.81.1"

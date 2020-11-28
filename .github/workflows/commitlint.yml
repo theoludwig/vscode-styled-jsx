@@ -3,11 +3,13 @@ name: 'Lint Commit Messages'
 on:
   push:
     branches: [master]
-  pull_request:
+  pull_request_review:
     branches: [master]
+    types: [submitted]
 
 jobs:
   commitlint:
+    if: ${{ (github.event_name == 'push') || (github.event_name == 'pull_request_review' && github.event.review.state == 'approved' && (github.event.review.author_association == 'COLLABORATOR' || github.event.review.author_association == 'MEMBER' || github.event.review.author_association == 'OWNER') && !github.event.pull_request.draft && github.event.pull_request.state == 'open') }}
     runs-on: 'ubuntu-latest'
     steps:
       - uses: 'actions/checkout@v2'

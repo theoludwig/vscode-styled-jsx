@@ -19,6 +19,7 @@ export const Button = props => (
           color: rgb(155, 84, 84);
           display: inline-block;
           font-size: 2em;
+          position: ;
         }
       `}
     </style>

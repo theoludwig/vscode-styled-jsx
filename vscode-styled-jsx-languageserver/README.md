@@ -34,27 +34,16 @@ const Button = props => (
 
 All the surrounding JSX will be removed, leaving just the CSS:
 
-```
+```css
+button {
+  color: #999;
+  display: inline-block;
+  font-size: 2em;
+}
 
-
-
-
-        button {
-          color: #999;
-          display: inline-block;
-          font-size: 2em;
-        }
-
-
-        button {
-
-          position: relative;
-
-        }
-
-
-
-
+button {
+  position: relative;
+}
 ```
 
 The reason for this is to preserve line numbers for the language server in order
