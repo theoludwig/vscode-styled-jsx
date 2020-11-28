@@ -14,6 +14,10 @@ export const Button = props => (
     <style jsx global>{`
       .test {
         font-size: large;
+
+        &:hover {
+          color: red;
+        }
       }
     `}</style>
     <style global jsx>

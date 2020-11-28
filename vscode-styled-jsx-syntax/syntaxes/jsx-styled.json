@@ -3,7 +3,7 @@
   "injectionSelector": "L:source -comment -string",
   "patterns": [
     {
-      "begin": "\\s*(<)(style) (jsx|global jsx|jsx global)(>)",
+      "begin": "(?:(<)(style) (jsx)(>))|(?:(<)(style) (jsx global)(>))|(?:(<)(style) (global jsx)(>))",
       "beginCaptures": {
         "1": {
           "name": "punctuation.definition.tag.begin.ts.tsx"
@@ -74,39 +74,43 @@
               "name": "punctuation.definition.block.js"
             }
           },
-          "patterns": [{ "include": "source.css.jsx.styled" }]
+          "patterns": [
+            {
+              "include": "source.css.scss.jsx.styled"
+            }
+          ]
         }
       ]
     },
-		{
-			"contentName": "source.css.scss",
-			"begin": "(?:(?:(\\bcss\\.)(resolve|global))|(\\bcss))(`)",
-			"beginCaptures": {
-				"1": {
-					"name": "punctuation.accessor.js"
-				},
-				"2": {
-					"name": "entity.name.function.tagged-template.js"
-				},
-				"3": {
-					"name": "entity.name.function.tagged-template.js"
-				},
-				"4": {
-					"name": "punctuation.definition.string.template.begin.js string.template.js"
-				}
-			},
-			"end": "`",
-			"endCaptures": {
-				"0": {
-					"name": "punctuation.definition.string.template.end.js string.template.js"
-				}
-			},
-			"patterns": [
-				{
-					"include": "source.css.jsx.styled"
-				}
-			]
-		}
+    {
+      "contentName": "source.css.scss",
+      "begin": "(?:(?:(\\bcss\\.)(resolve|global))|(\\bcss))(`)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.accessor.js"
+        },
+        "2": {
+          "name": "entity.name.function.tagged-template.js"
+        },
+        "3": {
+          "name": "entity.name.function.tagged-template.js"
+        },
+        "4": {
+          "name": "punctuation.definition.string.template.begin.js string.template.js"
+        }
+      },
+      "end": "`",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.template.end.js string.template.js"
+        }
+      },
+      "patterns": [
+        {
+          "include": "source.css.scss.jsx.styled"
+        }
+      ]
+    }
   ],
   "scopeName": "styled-jsx"
 }

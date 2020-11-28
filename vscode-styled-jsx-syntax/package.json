@@ -2,7 +2,7 @@
   "name": "vscode-styled-jsx-syntax",
   "displayName": "styled-jsx Syntax Highlighting",
   "description": "Syntax highlighting for styled-jsx",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "publisher": "Divlo",
   "author": {
     "name": "Divlo",
@@ -23,18 +23,18 @@
   "contributes": {
     "languages": [
       {
-        "id": "source.css.jsx.styled",
+        "id": "source.css.scss.jsx.styled",
         "aliases": [
-          "CSS (Styled JSX)"
+          "SCSS (Styled JSX)"
         ],
         "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
       {
-        "language": "source.css.jsx.styled",
-        "scopeName": "source.css.jsx.styled",
-        "path": "./syntaxes/css.json"
+        "language": "source.css.scss.jsx.styled",
+        "scopeName": "source.css.scss.jsx.styled",
+        "path": "./syntaxes/scss.json"
       },
       {
         "injectTo": [
