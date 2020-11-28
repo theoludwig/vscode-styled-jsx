@@ -3,7 +3,7 @@
   "injectionSelector": "L:source -comment -string",
   "patterns": [
     {
-      "begin": "(?:(<)(style) (jsx)(>))|(?:(<)(style) (jsx global)(>))|(?:(<)(style) (global jsx)(>))",
+      "begin": "\\s*(<)(style) (jsx|global jsx|jsx global)(>)",
       "beginCaptures": {
         "1": {
           "name": "punctuation.definition.tag.begin.ts.tsx"
