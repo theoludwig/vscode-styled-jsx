@@ -134,7 +134,7 @@ export function replaceAllWithSpacesExceptCss (
   textDocument: TextDocument,
   styledJsxTaggedTemplates: StyledJsxTaggedTemplate[],
   stylesheets: LanguageModelCache<Stylesheet>
-): { cssDocument: TextDocument; stylesheet: Stylesheet } {
+): { cssDocument: TextDocument, stylesheet: Stylesheet } {
   const text = textDocument.getText()
   let result = ''
   // Code that goes before CSS
