@@ -17,14 +17,16 @@ export interface StyledJsx {
   stylesheet: Stylesheet
 }
 
-const styledJsxPattern = /((<\s*?style\s*?(global)?\s*?jsx\s*?(global)?\s*?>)|(\s*?css\s*?`))/g
+const styledJsxPattern = new RegExp(
+  /((<\s*?style\s*?(global)?\s*?jsx\s*?(global)?\s*?>)|(\s*?css(.*)\s*?`))/g
+)
+
 export function getApproximateStyledJsxOffsets (
   document: TextDocument
 ): number[] {
   const results = []
   const doc = document.getText()
-  // eslint-disable-next-line
-  while (styledJsxPattern.exec(doc)) {
+  while (styledJsxPattern.exec(doc) != null) {
     results.push(styledJsxPattern.lastIndex)
   }
   return results
@@ -56,7 +58,11 @@ function walk (node: ts.Node, callback: (node: ts.Node) => void): void {
 
 function getTemplateString (
   node: ts.Node
-): ts.TemplateExpression | ts.TemplateLiteralTypeNode | ts.NoSubstitutionTemplateLiteral | undefined {
+):
+  | ts.TemplateExpression
+  | ts.TemplateLiteralTypeNode
+  | ts.NoSubstitutionTemplateLiteral
+  | undefined {
   if (ts.isTemplateHead(node) || ts.isTemplateLiteral(node)) {
     if (ts.isTemplateHead(node)) {
       return node.parent
@@ -128,7 +134,7 @@ export function replaceAllWithSpacesExceptCss (
   textDocument: TextDocument,
   styledJsxTaggedTemplates: StyledJsxTaggedTemplate[],
   stylesheets: LanguageModelCache<Stylesheet>
-): { cssDocument: TextDocument, stylesheet: Stylesheet } {
+): { cssDocument: TextDocument; stylesheet: Stylesheet } {
   const text = textDocument.getText()
   let result = ''
   // Code that goes before CSS
