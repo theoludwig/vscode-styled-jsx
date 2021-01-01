@@ -57,7 +57,7 @@
     "package": "vsce package"
   },
   "devDependencies": {
-    "vsce": "^1.81.1",
+    "vsce": "^1.83.0",
     "yarn": "^1.22.10"
   }
 }
