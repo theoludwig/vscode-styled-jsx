@@ -13,7 +13,7 @@ export async function activate (docUri: vscode.Uri): Promise<void> {
   const ext = vscode.extensions.getExtension(
     'Divlo.vscode-styled-jsx-languageserver'
   )
-  await ext.activate()
+  await ext?.activate()
   try {
     doc = await vscode.workspace.openTextDocument(docUri)
     editor = await vscode.window.showTextDocument(doc)
@@ -24,7 +24,7 @@ export async function activate (docUri: vscode.Uri): Promise<void> {
 }
 
 async function sleep (ms: number): Promise<unknown> {
-  return await new Promise(resolve => setTimeout(resolve, ms))
+  return await new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 export const getDocPath = (p: string): string => {
@@ -39,7 +39,7 @@ export async function setTestContent (content: string): Promise<boolean> {
     doc.positionAt(0),
     doc.positionAt(doc.getText().length)
   )
-  return await editor.edit(eb => eb.replace(all, content))
+  return await editor.edit((eb) => eb.replace(all, content))
 }
 
 export function includes (
@@ -47,8 +47,8 @@ export function includes (
   expectedArray: vscode.CompletionItem[]
 ): boolean {
   const result: boolean[] = []
-  expectedArray.forEach(item => {
-    const hasItem = actualArray.some(item2 => {
+  expectedArray.forEach((item) => {
+    const hasItem = actualArray.some((item2) => {
       return item2.kind === item.kind && item2.label === item.label
     })
     if (hasItem) {
@@ -64,12 +64,17 @@ export async function testCompletion (
   expectedCompletionList: vscode.CompletionList
 ): Promise<boolean> {
   await activate(docUri)
-  const actualCompletionList: vscode.CompletionList = await vscode.commands.executeCommand(
+  const actualCompletionList:
+  | vscode.CompletionList
+  | undefined = await vscode.commands.executeCommand(
     'vscode.executeCompletionItemProvider',
     docUri,
     position
   )
-  return includes(actualCompletionList.items, expectedCompletionList.items)
+  return includes(
+    actualCompletionList?.items as vscode.CompletionItem[],
+    expectedCompletionList.items
+  )
 }
 
 export async function testHover (
@@ -78,12 +83,14 @@ export async function testHover (
   expectedStartsWithValueHover: string
 ): Promise<boolean> {
   await activate(docUri)
-  const result: vscode.Hover[] = await vscode.commands.executeCommand(
+  const result:
+  | vscode.Hover[]
+  | undefined = await vscode.commands.executeCommand(
     'vscode.executeHoverProvider',
     docUri,
     position
   )
-  if (result.length < 1) {
+  if (result == null || result.length < 1) {
     return false
   }
   const { contents } = result[0]

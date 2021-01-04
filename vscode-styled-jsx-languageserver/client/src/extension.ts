@@ -71,7 +71,7 @@ export function activate (context: ExtensionContext): void {
 
   client
     .onReady()
-    .then(_ => {
+    .then((_) => {
       client.code2ProtocolConverter.asPosition(
         window?.activeTextEditor?.selection?.active
       )
@@ -85,8 +85,8 @@ export function activate (context: ExtensionContext): void {
             }
             return client
               .sendRequest(DocumentColorRequest.type, params)
-              .then(symbols => {
-                return symbols.map(symbol => {
+              .then((symbols) => {
+                return symbols.map((symbol) => {
                   const range = client.protocol2CodeConverter.asRange(
                     symbol.range
                   )
@@ -113,17 +113,19 @@ export function activate (context: ExtensionContext): void {
             }
             return client
               .sendRequest(ColorPresentationRequest.type, params)
-              .then(presentations => {
-                return presentations.map(p => {
+              .then((presentations) => {
+                return presentations.map((p) => {
                   const presentation = new ColorPresentation(p.label)
                   presentation.textEdit =
-                    p.textEdit != null &&
-                    client.protocol2CodeConverter.asTextEdit(p.textEdit)
+                    p.textEdit != null
+                      ? client.protocol2CodeConverter.asTextEdit(p.textEdit)
+                      : undefined
                   presentation.additionalTextEdits =
-                    p.additionalTextEdits != null &&
-                    client.protocol2CodeConverter.asTextEdits(
-                      p.additionalTextEdits
-                    )
+                    p.additionalTextEdits != null
+                      ? client.protocol2CodeConverter.asTextEdits(
+                        p.additionalTextEdits
+                      )
+                      : undefined
                   return presentation
                 })
               })
@@ -186,7 +188,7 @@ export function activate (context: ExtensionContext): void {
           "CSS fix is outdated and can't be applied to the document."
         )
       }
-      const success = await textEditor.edit(mutator => {
+      const success = await textEditor.edit((mutator) => {
         for (const edit of edits) {
           mutator.replace(
             client.protocol2CodeConverter.asRange(edit.range),
