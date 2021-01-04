@@ -20,9 +20,8 @@ import {
   LanguageClientOptions,
   ServerOptions,
   TransportKind
-} from 'vscode-languageclient'
+} from 'vscode-languageclient/node'
 
-import { ConfigurationFeature } from 'vscode-languageclient/lib/configuration'
 import {
   DocumentColorRequest,
   DocumentColorParams,
@@ -66,7 +65,6 @@ export function activate (context: ExtensionContext): void {
     serverOptions,
     clientOptions
   )
-  client.registerFeature(new ConfigurationFeature(client))
 
   const disposable = client.start()
   context.subscriptions.push(disposable)

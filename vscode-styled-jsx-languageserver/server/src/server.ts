@@ -9,7 +9,7 @@ import {
   TextDocumentPositionParams,
   HandlerResult,
   DocumentSymbolParams
-} from 'vscode-languageserver'
+} from 'vscode-languageserver/node'
 import {
   getSCSSLanguageService,
   LanguageSettings,
