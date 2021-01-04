@@ -8,29 +8,21 @@ updates:
       interval: 'monthly'
 
   - package-ecosystem: 'npm'
-    versioning-strategy: 'auto'
     directory: '/vscode-styled-jsx-syntax'
-    open-pull-requests-limit: 10
     schedule:
       interval: 'monthly'
 
   - package-ecosystem: 'npm'
-    versioning-strategy: 'auto'
     directory: '/vscode-styled-jsx-languageserver'
-    open-pull-requests-limit: 10
     schedule:
       interval: 'monthly'
 
   - package-ecosystem: 'npm'
-    versioning-strategy: 'auto'
     directory: '/vscode-styled-jsx-languageserver/client'
-    open-pull-requests-limit: 10
     schedule:
       interval: 'monthly'
 
   - package-ecosystem: 'npm'
-    versioning-strategy: 'auto'
     directory: '/vscode-styled-jsx-languageserver/server'
-    open-pull-requests-limit: 10
     schedule:
       interval: 'monthly'
