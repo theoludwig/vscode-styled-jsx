@@ -5,9 +5,9 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"sourceMap": true,
-		"strict": true,
 		"outDir": "out",
-		"rootDir": "src"
+		"rootDir": "src",
+		"strict": true
 	},
 	"include": ["src"],
 	"exclude": ["node_modules", ".vscode-test"]

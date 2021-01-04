@@ -73,7 +73,7 @@ async function validateTextDocument (
       .map(d => {
         return {
           ...d,
-          code: d.code as string | number | undefined
+          code: d.code
         }
       })
     connection.sendDiagnostics({ uri: textDocument.uri, diagnostics })
