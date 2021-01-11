@@ -2,7 +2,7 @@
 
 [Main GitHub Repo](https://github.com/Divlo/vscode-styled-jsx/).
 
-Syntax highlighting for [styled-jsx](https://github.com/zeit/styled-jsx).
+Syntax highlighting for [styled-jsx](https://github.com/vercel/styled-jsx).
 
 <img src="https://raw.githubusercontent.com/Divlo/vscode-styled-jsx/master/.github/images/syntax-highlight.png" width="550"/>
 
