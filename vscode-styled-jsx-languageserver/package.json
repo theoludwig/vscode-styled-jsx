@@ -30,6 +30,7 @@
   "main": "./client/out/extension",
   "scripts": {
     "vscode:prepublish": "npm run compile",
+    "publish": "vsce publish",
     "compile": "tsc -b",
     "watch": "tsc -b -w",
     "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",

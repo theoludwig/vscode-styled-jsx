@@ -54,6 +54,7 @@
     ]
   },
   "scripts": {
+    "publish": "vsce publish",
     "package": "vsce package"
   },
   "devDependencies": {

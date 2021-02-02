@@ -1,4 +1,4 @@
-# See: https://github.com/marketplace/actions/github-action-for-vsce
+# For more information see: https://github.com/marketplace/actions/github-action-for-vsce
 
 name: 'Deploy Extension'
 
@@ -14,10 +14,14 @@ jobs:
         working-directory: 'vscode-styled-jsx-languageserver'
     steps:
       - uses: 'actions/checkout@v2'
-      - run: 'npm install'
-      - uses: 'lannonbr/vsce-action@master'
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: 'actions/setup-node@v2.1.4'
         with:
-          args: 'publish -p $VSCE_TOKEN'
+          node-version: ${{ matrix.node-version }}
+
+      - run: 'npm install'
+      - run: 'npm run publish -- --pat $VSCE_TOKEN'
         env:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
 
@@ -28,9 +32,13 @@ jobs:
         working-directory: 'vscode-styled-jsx-syntax'
     steps:
       - uses: 'actions/checkout@v2'
-      - run: 'npm install'
-      - uses: 'lannonbr/vsce-action@master'
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: 'actions/setup-node@v2.1.4'
         with:
-          args: 'publish -p $VSCE_TOKEN'
+          node-version: ${{ matrix.node-version }}
+
+      - run: 'npm install'
+      - run: 'npm run publish -- --pat $VSCE_TOKEN'
         env:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
