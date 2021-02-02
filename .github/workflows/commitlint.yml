@@ -2,9 +2,9 @@ name: 'Lint Commit Messages'
 
 on:
   push:
-    branches: [master]
+    branches: [master, develop]
   pull_request_review:
-    branches: [master]
+    branches: [master, develop]
     types: [submitted]
 
 jobs:
