@@ -33,6 +33,6 @@
 		"@types/vscode": "1.52.0",
 		"snazzy": "file:../node_modules/snazzy",
 		"ts-standard": "file:../node_modules/ts-standard",
-		"vscode-test": "^1.4.1"
+		"vscode-test": "^1.5.0"
 	}
 }
