@@ -20,3 +20,17 @@ jobs:
           args: 'publish -p $VSCE_TOKEN'
         env:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+
+  deploy_syntax:
+    runs-on: 'ubuntu-latest'
+    defaults:
+      run:
+        working-directory: 'vscode-styled-jsx-syntax'
+    steps:
+      - uses: 'actions/checkout@v2'
+      - run: 'npm install'
+      - uses: 'lannonbr/vsce-action@master'
+        with:
+          args: 'publish -p $VSCE_TOKEN'
+        env:
+          VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}

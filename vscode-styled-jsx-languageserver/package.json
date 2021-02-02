@@ -2,7 +2,7 @@
   "name": "vscode-styled-jsx-languageserver",
   "displayName": "styled-jsx Language Server",
   "description": "Language server for styled-jsx",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": {
     "name": "Divlo",
     "email": "contact@divlo.fr",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "publisher": "Divlo",
   "engines": {
-    "vscode": "^1.49.0"
+    "vscode": "^1.50.0"
   },
   "categories": [
     "Linters"
