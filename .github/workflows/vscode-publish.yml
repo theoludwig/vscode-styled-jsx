@@ -1,0 +1,22 @@
+# See: https://github.com/marketplace/actions/github-action-for-vsce
+
+name: 'Deploy Extension'
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy_languageserver:
+    runs-on: 'ubuntu-latest'
+    defaults:
+      run:
+        working-directory: 'vscode-styled-jsx-languageserver'
+    steps:
+      - uses: 'actions/checkout@v2'
+      - run: 'npm install'
+      - uses: 'lannonbr/vsce-action@master'
+        with:
+          args: 'publish -p $VSCE_TOKEN'
+        env:
+          VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
