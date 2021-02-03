@@ -15,15 +15,22 @@ jobs:
     steps:
       - uses: 'actions/checkout@v2'
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: 'actions/setup-node@v2.1.4'
+      - uses: 'actions/setup-node@v2.1.4'
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14
 
-      - run: 'npm install'
-      - run: 'npm run publish -- --pat $VSCE_TOKEN'
-        env:
-          VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+      - run: 'npm ci'
+
+      - name: 'Publish to Open VSX Registry'
+        uses: 'HaaLeo/publish-vscode-extension@v0'
+        with:
+          pat: ${{ secrets.OPEN_VSX_TOKEN }}
+
+      - name: 'Publish to Visual Studio Marketplace'
+        uses: 'HaaLeo/publish-vscode-extension@v0'
+        with:
+          pat: ${{ secrets.VSCE_TOKEN }}
+          registryUrl: 'https://marketplace.visualstudio.com'
 
   deploy_syntax:
     runs-on: 'ubuntu-latest'
@@ -33,12 +40,19 @@ jobs:
     steps:
       - uses: 'actions/checkout@v2'
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: 'actions/setup-node@v2.1.4'
+      - uses: 'actions/setup-node@v2.1.4'
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14
 
-      - run: 'npm install'
-      - run: 'npm run publish -- --pat $VSCE_TOKEN'
-        env:
-          VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+      - run: 'npm ci'
+
+      - name: 'Publish to Open VSX Registry'
+        uses: 'HaaLeo/publish-vscode-extension@v0'
+        with:
+          pat: ${{ secrets.OPEN_VSX_TOKEN }}
+
+      - name: 'Publish to Visual Studio Marketplace'
+        uses: 'HaaLeo/publish-vscode-extension@v0'
+        with:
+          pat: ${{ secrets.VSCE_TOKEN }}
+          registryUrl: 'https://marketplace.visualstudio.com'
