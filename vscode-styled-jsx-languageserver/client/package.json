@@ -6,7 +6,7 @@
 	"version": "0.0.1",
 	"publisher": "Divlo",
 	"engines": {
-		"vscode": "^1.49.0"
+		"vscode": "^1.50.0"
 	},
 	"repository": {
 		"type": "git",

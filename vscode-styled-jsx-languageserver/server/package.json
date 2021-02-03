@@ -1,7 +1,7 @@
 {
   "name": "styled-jsx-languageserver",
   "description": "styled-jsx language server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "author": "Divlo",
   "license": "MIT",
   "engines": {
