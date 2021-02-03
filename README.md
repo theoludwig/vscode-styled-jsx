@@ -14,19 +14,7 @@
 
 ## 📜 About
 
-All the features of a CSS file inside [Visual Studio Code](https://code.visualstudio.com/) for [styled-jsx](https://www.npmjs.com/package/styled-jsx).
-
-There are two repo maintained by different developers :
-
-- Auto-completion: [styled-jsx Language Server](https://github.com/Grimones/vscode-styled-jsx-languageserver)
-- Syntax highlighting: [vscode-styled-jsx](https://github.com/iFwu/vscode-styled-jsx)
-
-Unfortunately, they are abandoned projects and the fact that it is seperated in 2 differents repos makes it hard to contribute and to follow along the updates.
-
-That's why I created this monorepo, to maintain two VS Code extensions :
-
-- [vscode-styled-jsx-languageserver](https://marketplace.visualstudio.com/items?itemName=Divlo.vscode-styled-jsx-languageserver)
-- [vscode-styled-jsx-syntax](https://marketplace.visualstudio.com/items?itemName=Divlo.vscode-styled-jsx-syntax)
+All the features of a CSS/SCSS file inside [Visual Studio Code](https://code.visualstudio.com/) for [styled-jsx](https://www.npmjs.com/package/styled-jsx).
 
 ### How to install ?
 
@@ -38,13 +26,18 @@ That's why I created this monorepo, to maintain two VS Code extensions :
   ext install Divlo.vscode-styled-jsx-syntax
   ```
 
-- [vscode-styled-jsx-languageserver](https://marketplace.visualstudio.com/items?itemName=Divlo.vscode-styled-jsx-languageserver)
+- [styled-jsx Language Server](https://marketplace.visualstudio.com/items?itemName=Divlo.vscode-styled-jsx-languageserver)
 
   Launch VS Code Quick Open (⌘+P), paste the following command, and press enter.
 
   ```text
   ext install Divlo.vscode-styled-jsx-languageserver
   ```
+
+#### The 2 extensions are also available on [open-vsx](https://open-vsx.org/)
+
+- [styled-jsx Syntax Highlighting](https://open-vsx.org/extension/Divlo/vscode-styled-jsx-syntax)
+- [styled-jsx Language Server](https://open-vsx.org/extension/Divlo/vscode-styled-jsx-languageserver)
 
 ## 💡 Contributing
 

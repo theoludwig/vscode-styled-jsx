@@ -1,4 +1,4 @@
-# For more information see: https://github.com/marketplace/actions/github-action-for-vsce
+# For more information see: https://github.com/marketplace/actions/publish-vs-code-extension
 
 name: 'Deploy Extension'
 
