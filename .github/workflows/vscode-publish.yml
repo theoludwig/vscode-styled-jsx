@@ -9,9 +9,6 @@ on:
 jobs:
   deploy_languageserver:
     runs-on: 'ubuntu-latest'
-    defaults:
-      run:
-        working-directory: 'vscode-styled-jsx-languageserver'
     steps:
       - uses: 'actions/checkout@v2'
 
@@ -25,18 +22,17 @@ jobs:
         uses: 'HaaLeo/publish-vscode-extension@v0'
         with:
           pat: ${{ secrets.OPEN_VSX_TOKEN }}
+          packagePath: './vscode-styled-jsx-languageserver'
 
       - name: 'Publish to Visual Studio Marketplace'
         uses: 'HaaLeo/publish-vscode-extension@v0'
         with:
           pat: ${{ secrets.VSCE_TOKEN }}
           registryUrl: 'https://marketplace.visualstudio.com'
+          packagePath: './vscode-styled-jsx-languageserver'
 
   deploy_syntax:
     runs-on: 'ubuntu-latest'
-    defaults:
-      run:
-        working-directory: 'vscode-styled-jsx-syntax'
     steps:
       - uses: 'actions/checkout@v2'
 
@@ -50,9 +46,11 @@ jobs:
         uses: 'HaaLeo/publish-vscode-extension@v0'
         with:
           pat: ${{ secrets.OPEN_VSX_TOKEN }}
+          packagePath: './vscode-styled-jsx-syntax'
 
       - name: 'Publish to Visual Studio Marketplace'
         uses: 'HaaLeo/publish-vscode-extension@v0'
         with:
           pat: ${{ secrets.VSCE_TOKEN }}
           registryUrl: 'https://marketplace.visualstudio.com'
+          packagePath: './vscode-styled-jsx-syntax'
