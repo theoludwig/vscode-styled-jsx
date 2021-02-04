@@ -41,7 +41,7 @@ function cleanPendingValidation (textDocument: TextDocument): void {
   const request = pendingValidationRequests[textDocument.uri]
   if (request != null) {
     clearTimeout(request)
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete pendingValidationRequests[textDocument.uri]
   }
 }
@@ -49,10 +49,9 @@ function cleanPendingValidation (textDocument: TextDocument): void {
 function triggerValidation (textDocument: TextDocument): void {
   cleanPendingValidation(textDocument)
   pendingValidationRequests[textDocument.uri] = setTimeout(() => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete pendingValidationRequests[textDocument.uri]
-    // eslint-disable-next-line
-    validateTextDocument(textDocument)
+    validateTextDocument(textDocument).catch(() => {})
   }, validationDelayMs)
 }
 
@@ -139,14 +138,13 @@ connection.onInitialize(initializeParams => {
   }
 })
 
-// eslint-disable-next-line
-connection.onDidChangeConfiguration(async _change => {
+connection.onDidChangeConfiguration((async () => {
   cssLanguageService.configure(defaultSettings)
   const textDocumentsAll = textDocuments.all()
   for (const textDocument of textDocumentsAll) {
     await validateTextDocument(textDocument)
   }
-})
+}) as unknown as () => void)
 
 connection.onCompletionResolve(item => item)
 

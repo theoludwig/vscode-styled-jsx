@@ -29,7 +29,7 @@ export function getLanguageModelCache<T> (
       for (const uri of uris) {
         const languageModelInfo = languageModels[uri]
         if (languageModelInfo.cTime < cutoffTime) {
-          // eslint-disable-next-line
+          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete languageModels[uri]
           nModels--
         }
@@ -72,7 +72,7 @@ export function getLanguageModelCache<T> (
           }
         }
         if (oldestUri != null) {
-          // eslint-disable-next-line
+          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete languageModels[oldestUri]
           nModels--
         }
@@ -82,7 +82,7 @@ export function getLanguageModelCache<T> (
     onDocumentRemoved (document: TextDocument) {
       const uri = document.uri
       if (languageModels[uri] != null) {
-        // eslint-disable-next-line
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete languageModels[uri]
         nModels--
       }
