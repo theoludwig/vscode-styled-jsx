@@ -14,11 +14,11 @@ jobs:
     steps:
       - uses: 'actions/checkout@v2'
 
-      - uses: 'actions/setup-node@v2.1.5'
+      - uses: 'actions/setup-node@v2.2.0'
         with:
-          node-version: 14
+          node-version: '14.x'
 
-      - run: 'npm ci'
+      - run: 'npm install'
 
       - name: 'Publish to Open VSX Registry'
         uses: 'HaaLeo/publish-vscode-extension@v0'
@@ -42,11 +42,11 @@ jobs:
     steps:
       - uses: 'actions/checkout@v2'
 
-      - uses: 'actions/setup-node@v2.1.5'
+      - uses: 'actions/setup-node@v2.2.0'
         with:
-          node-version: 14
+          node-version: '14.x'
 
-      - run: 'npm ci'
+      - run: 'npm install'
 
       - name: 'Publish to Open VSX Registry'
         uses: 'HaaLeo/publish-vscode-extension@v0'
