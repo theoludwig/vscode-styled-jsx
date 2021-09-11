@@ -24,3 +24,20 @@ jobs:
       - run: 'npm run package'
       - run: 'npm run lint'
       - run: 'xvfb-run -a npm test'
+
+  commitlint:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: 'actions/checkout@v2'
+        with:
+          fetch-depth: 0
+
+      - uses: 'wagoid/commitlint-github-action@v4.1.1'
+
+  automerge-dependabot:
+    needs: [ci_languageserver, commitlint]
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: 'fastify/github-action-merge-dependabot@v2.4.0'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
