@@ -26,6 +26,7 @@ jobs:
       - run: 'xvfb-run -a npm test'
 
   commitlint:
+    if: github.actor != 'dependabot'
     runs-on: 'ubuntu-latest'
     steps:
       - uses: 'actions/checkout@v2'
@@ -35,7 +36,7 @@ jobs:
       - uses: 'wagoid/commitlint-github-action@v4.1.1'
 
   automerge-dependabot:
-    needs: [ci_languageserver, commitlint]
+    needs: [ci_languageserver]
     runs-on: 'ubuntu-latest'
     steps:
       - uses: 'fastify/github-action-merge-dependabot@v2.4.0'
