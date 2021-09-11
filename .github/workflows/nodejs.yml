@@ -33,7 +33,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: 'wagoid/commitlint-github-action@v4.1.1'
+      - uses: 'wagoid/commitlint-github-action@v4.1.4'
 
   automerge-dependabot:
     needs: [ci_languageserver]
