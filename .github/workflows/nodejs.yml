@@ -26,7 +26,7 @@ jobs:
       - run: 'xvfb-run -a npm test'
 
   commitlint:
-    if: github.actor != 'dependabot'
+    if: github.event.pusher.name != 'dependabot'
     runs-on: 'ubuntu-latest'
     steps:
       - uses: 'actions/checkout@v2'
