@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "typescript": "file:../node_modules/typescript",
-    "vscode-css-languageservice": "^5.1.5",
+    "vscode-css-languageservice": "^5.1.6",
     "vscode-languageserver": "^7.0.0",
     "vscode-languageserver-textdocument": "^1.0.1"
   },
