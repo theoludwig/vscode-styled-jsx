@@ -30,7 +30,7 @@
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.4",
-		"@types/vscode": "1.60.0",
+		"@types/vscode": "1.61.0",
 		"snazzy": "file:../node_modules/snazzy",
 		"ts-standard": "file:../node_modules/ts-standard",
 		"vscode-test": "^1.6.1"
