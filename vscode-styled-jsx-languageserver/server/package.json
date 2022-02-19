@@ -20,13 +20,13 @@
     "format": "ts-standard --fix | snazzy"
   },
   "dependencies": {
-    "typescript": "file:../node_modules/typescript",
+    "typescript": "4.5.5",
     "vscode-css-languageservice": "^5.1.13",
     "vscode-languageserver": "^7.0.0",
     "vscode-languageserver-textdocument": "^1.0.4"
   },
   "devDependencies": {
-    "snazzy": "file:../node_modules/snazzy",
-    "ts-standard": "file:../node_modules/ts-standard"
+    "snazzy": "9.0.0",
+    "ts-standard": "11.0.0"
   }
 }
