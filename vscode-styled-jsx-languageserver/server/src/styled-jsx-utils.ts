@@ -17,9 +17,7 @@ export interface StyledJsx {
   stylesheet: Stylesheet
 }
 
-const styledJsxPattern = new RegExp(
-  /((<\s*?style\s*?(global)?\s*?jsx\s*?(global)?\s*?>)|(\s*?css(.*)\s*?`))/g
-)
+const styledJsxPattern = /((<\s*?style\s*?(global)?\s*?jsx\s*?(global)?\s*?>)|(\s*?css(.*)\s*?`))/g
 
 export function getApproximateStyledJsxOffsets (
   document: TextDocument

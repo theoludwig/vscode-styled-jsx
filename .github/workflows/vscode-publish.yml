@@ -6,7 +6,6 @@ on:
 
 jobs:
   deploy_languageserver:
-    if: ${{ startsWith(github.event.head_commit.message, 'chore(release-languageserver)') }}
     runs-on: 'ubuntu-latest'
     defaults:
       run:
@@ -34,7 +33,6 @@ jobs:
           packagePath: './vscode-styled-jsx-languageserver'
 
   deploy_syntax:
-    if: ${{ startsWith(github.event.head_commit.message, 'chore(release-syntax)') }}
     runs-on: 'ubuntu-latest'
     defaults:
       run:
