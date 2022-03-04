@@ -8,6 +8,7 @@
     "email": "contact@divlo.fr",
     "url": "https://github.com/Divlo"
   },
+  "icon": "assets/logo.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/Divlo/vscode-styled-jsx"
